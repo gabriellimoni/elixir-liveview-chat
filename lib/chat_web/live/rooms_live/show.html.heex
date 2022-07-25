@@ -1,0 +1,26 @@
+<h1>Show Rooms</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.rooms_show_path(@socket, :show, @rooms)}>
+    <.live_component
+      module={ChatWeb.RoomsLive.FormComponent}
+      id={@rooms.id}
+      title={@page_title}
+      action={@live_action}
+      rooms={@rooms}
+      return_to={Routes.rooms_show_path(@socket, :show, @rooms)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @rooms.name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.rooms_show_path(@socket, :edit, @rooms), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.rooms_index_path(@socket, :index) %></span>
