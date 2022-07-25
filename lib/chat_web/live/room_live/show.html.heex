@@ -1,26 +1,26 @@
-<h1>Show Room</h1>
+<h1><%= @room.name %></h1>
 
-<%= if @live_action in [:edit] do %>
-  <.modal return_to={Routes.room_show_path(@socket, :show, @room)}>
-    <.live_component
-      module={ChatWeb.RoomLive.FormComponent}
-      id={@room.id}
-      title={@page_title}
-      action={@live_action}
-      room={@room}
-      return_to={Routes.room_show_path(@socket, :show, @room)}
-    />
-  </.modal>
+<%= if @username == nil do %>
+  <label>Set your username to begin</label>
+  <form phx-submit="username">
+    <input type="text" name="user[username]" autofocus/>
+  </form>
+<% else %>
+  <label>Say something</label>
+  <form phx-submit="message">
+    <input id="message" type="text" name="message[content]" autofocus/>
+  </form>
 <% end %>
 
-<ul>
+<%= if @users != nil do %>
+  <strong>Usuários:</strong>
+  <ul>
+    <%= for user <- @users do %>
+      <li><%= user.username %></li>
+    <% end %>
+  </ul>
+<% end %>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @room.name %>
-  </li>
 
-</ul>
 
-<span><%= live_patch "Edit", to: Routes.room_show_path(@socket, :edit, @room), class: "button" %></span> |
 <span><%= live_redirect "Back", to: Routes.room_index_path(@socket, :index) %></span>
