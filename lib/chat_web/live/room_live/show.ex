@@ -15,7 +15,8 @@ defmodule ChatWeb.RoomLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:room, ChatRoom.get_room!(id))
-     |> assign(:room_id, id)}
+     |> assign(:room_id, id)
+     |> assign(:messages, [])}
   end
 
   @impl true
@@ -25,7 +26,6 @@ defmodule ChatWeb.RoomLive.Show do
       username: username,
     })
     ChatWeb.Endpoint.subscribe(room_id)
-    PubSub.subscribe(Chat.PubSub, room_id)
 
     {:ok, users} = get_users(room_id)
 
@@ -37,7 +37,13 @@ defmodule ChatWeb.RoomLive.Show do
 
   @impl true
   def handle_event("message", %{"message" => %{"content" => content}}, socket) do
-    IO.puts content
+    new_message = %{
+      user: socket.assigns.username,
+      content: content,
+    }
+    PubSub.broadcast(Chat.PubSub, socket.assigns.room_id, %{
+      event: "new_message", message: new_message,
+    })
     {:noreply, socket}
   end
 
@@ -45,6 +51,11 @@ defmodule ChatWeb.RoomLive.Show do
   def handle_info(%{event: "presence_diff"}, socket) do
     {:ok, users} = get_users(socket.assigns.room_id)
     {:noreply, socket |> assign(:users, users)}
+  end
+
+  @impl true
+  def handle_info(%{event: "new_message", message: new_message}, socket) do
+    {:noreply, socket |> assign(:messages, [new_message | socket.assigns.messages])}
   end
 
   defp get_users(room_id) do
