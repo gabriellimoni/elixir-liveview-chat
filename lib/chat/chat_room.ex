@@ -6,7 +6,7 @@ defmodule Chat.ChatRoom do
   import Ecto.Query, warn: false
   alias Chat.Repo
 
-  alias Chat.ChatRoom.Rooms
+  alias Chat.ChatRoom.Room
 
   @doc """
   Returns the list of rooms.
@@ -14,91 +14,91 @@ defmodule Chat.ChatRoom do
   ## Examples
 
       iex> list_rooms()
-      [%Rooms{}, ...]
+      [%Room{}, ...]
 
   """
   def list_rooms do
-    Repo.all(Rooms)
+    Repo.all(Room)
   end
 
   @doc """
-  Gets a single rooms.
+  Gets a single room.
 
-  Raises `Ecto.NoResultsError` if the Rooms does not exist.
+  Raises `Ecto.NoResultsError` if the Room does not exist.
 
   ## Examples
 
-      iex> get_rooms!(123)
-      %Rooms{}
+      iex> get_room!(123)
+      %Room{}
 
-      iex> get_rooms!(456)
+      iex> get_room!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_rooms!(id), do: Repo.get!(Rooms, id)
+  def get_room!(id), do: Repo.get!(Room, id)
 
   @doc """
-  Creates a rooms.
+  Creates a room.
 
   ## Examples
 
-      iex> create_rooms(%{field: value})
-      {:ok, %Rooms{}}
+      iex> create_room(%{field: value})
+      {:ok, %Room{}}
 
-      iex> create_rooms(%{field: bad_value})
+      iex> create_room(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_rooms(attrs \\ %{}) do
-    %Rooms{}
-    |> Rooms.changeset(attrs)
+  def create_room(attrs \\ %{}) do
+    %Room{}
+    |> Room.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a rooms.
+  Updates a room.
 
   ## Examples
 
-      iex> update_rooms(rooms, %{field: new_value})
-      {:ok, %Rooms{}}
+      iex> update_room(room, %{field: new_value})
+      {:ok, %Room{}}
 
-      iex> update_rooms(rooms, %{field: bad_value})
+      iex> update_room(room, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_rooms(%Rooms{} = rooms, attrs) do
-    rooms
-    |> Rooms.changeset(attrs)
+  def update_room(%Room{} = room, attrs) do
+    room
+    |> Room.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a rooms.
+  Deletes a room.
 
   ## Examples
 
-      iex> delete_rooms(rooms)
-      {:ok, %Rooms{}}
+      iex> delete_room(room)
+      {:ok, %Room{}}
 
-      iex> delete_rooms(rooms)
+      iex> delete_room(room)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_rooms(%Rooms{} = rooms) do
-    Repo.delete(rooms)
+  def delete_room(%Room{} = room) do
+    Repo.delete(room)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking rooms changes.
+  Returns an `%Ecto.Changeset{}` for tracking room changes.
 
   ## Examples
 
-      iex> change_rooms(rooms)
-      %Ecto.Changeset{data: %Rooms{}}
+      iex> change_room(room)
+      %Ecto.Changeset{data: %Room{}}
 
   """
-  def change_rooms(%Rooms{} = rooms, attrs \\ %{}) do
-    Rooms.changeset(rooms, attrs)
+  def change_room(%Room{} = room, attrs \\ %{}) do
+    Room.changeset(room, attrs)
   end
 end

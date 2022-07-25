@@ -1,4 +1,4 @@
-defmodule Chat.ChatRoom.Rooms do
+defmodule Chat.ChatRoom.Room do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,8 +9,8 @@ defmodule Chat.ChatRoom.Rooms do
   end
 
   @doc false
-  def changeset(rooms, attrs) do
-    rooms
+  def changeset(room, attrs) do
+    room
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end

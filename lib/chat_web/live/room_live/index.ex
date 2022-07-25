@@ -1,12 +1,12 @@
-defmodule ChatWeb.RoomsLive.Index do
+defmodule ChatWeb.RoomLive.Index do
   use ChatWeb, :live_view
 
   alias Chat.ChatRoom
-  alias Chat.ChatRoom.Rooms
+  alias Chat.ChatRoom.Room
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :rooms_collection, list_rooms())}
+    {:ok, assign(socket, :rooms, list_rooms())}
   end
 
   @impl true
@@ -16,28 +16,28 @@ defmodule ChatWeb.RoomsLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Rooms")
-    |> assign(:rooms, ChatRoom.get_rooms!(id))
+    |> assign(:page_title, "Edit Room")
+    |> assign(:room, ChatRoom.get_room!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Rooms")
-    |> assign(:rooms, %Rooms{})
+    |> assign(:page_title, "New Room")
+    |> assign(:room, %Room{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Rooms")
-    |> assign(:rooms, nil)
+    |> assign(:room, nil)
   end
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    rooms = ChatRoom.get_rooms!(id)
-    {:ok, _} = ChatRoom.delete_rooms(rooms)
+    room = ChatRoom.get_room!(id)
+    {:ok, _} = ChatRoom.delete_room(room)
 
-    {:noreply, assign(socket, :rooms_collection, list_rooms())}
+    {:noreply, assign(socket, :rooms, list_rooms())}
   end
 
   defp list_rooms do

@@ -17,4 +17,18 @@ defmodule Chat.ChatRoomFixtures do
 
     rooms
   end
+
+  @doc """
+  Generate a room.
+  """
+  def room_fixture(attrs \\ %{}) do
+    {:ok, room} =
+      attrs
+      |> Enum.into(%{
+        name: "some name"
+      })
+      |> Chat.ChatRoom.create_room()
+
+    room
+  end
 end

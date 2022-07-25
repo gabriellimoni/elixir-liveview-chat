@@ -1,4 +1,4 @@
-defmodule ChatWeb.RoomsLive.Show do
+defmodule ChatWeb.RoomLive.Show do
   use ChatWeb, :live_view
 
   alias Chat.ChatRoom
@@ -13,9 +13,9 @@ defmodule ChatWeb.RoomsLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:rooms, ChatRoom.get_rooms!(id))}
+     |> assign(:room, ChatRoom.get_room!(id))}
   end
 
-  defp page_title(:show), do: "Show Rooms"
-  defp page_title(:edit), do: "Edit Rooms"
+  defp page_title(:show), do: "Show Room"
+  defp page_title(:edit), do: "Edit Room"
 end
